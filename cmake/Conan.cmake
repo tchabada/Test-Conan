@@ -4,7 +4,7 @@ macro(run_conan)
   message(
     STATUS
       "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-  file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake"
+  file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/master/conan.cmake"
        "${CMAKE_BINARY_DIR}/conan.cmake")
 #endif()
 
@@ -20,10 +20,12 @@ conan_cmake_run(
   folly/2019.10.21.00
   OPTIONS
   ${CONAN_EXTRA_OPTIONS}
-  BASIC_SETUP
-  CMAKE_TARGETS # individual targets to link to
   IMPORTS
   ${CONAN_IMPORTS}
+  SETTINGS
+  ${CONAN_SETTINGS}
+  BASIC_SETUP
+  CMAKE_TARGETS
   BUILD
   missing)
 endmacro()

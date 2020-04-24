@@ -22,8 +22,6 @@ endif()
 # tools
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_MAKE_PROGRAM make)
-
 option(ENABLE_IPO
        "Enable Iterprocedural Optimization, aka Link Time Optimization (LTO)"
        OFF)

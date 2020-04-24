@@ -29,30 +29,22 @@ include(cmake/StaticAnalyzers.cmake)
 option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
 option(ENABLE_TESTING "Enable Test Builds" ON)
 
-# Very basic PCH example
-option(ENABLE_PCH "Enable Precompiled Headers" OFF)
-if (ENABLE_PCH)
-  # This sets a global PCH parameter, each project will build its own PCH, which
-  # is a good idea if any #define's change
-  target_precompile_headers(project_options INTERFACE <vector> <string> <map> <utility>)
-endif()
-
 # Set up some extra Conan dependencies based on our needs
 # before loading Conan
 set(CONAN_EXTRA_REQUIRES "")
 set(CONAN_EXTRA_OPTIONS "")
-
-# set(CONAN_IMPORTS ${CONAN_IMPORTS}
-#   "plugins, * -> ./bin/plugins"
-#   "bin, *.dll -> ./bin"
-#   "lib, *.dylib -> ./lib"
-#   "lib, *.so -> ./lib")
-
-#set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} qt/5.14.1@bincrafters/stable)
-#set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} qt:shared=False)
+set(CONAN_SETTINGS "")
 
 include(cmake/Conan.cmake)
 run_conan()
+
+# Very basic PCH example
+option(ENABLE_PCH "Enable Precompiled Headers" ON)
+if (ENABLE_PCH)
+  # This sets a global PCH parameter, each project will build its own PCH, which
+  # is a good idea if any #define's change
+  target_precompile_headers(project_options INTERFACE <string> <vector> <map> <memory> <utility>)
+endif()
 
 if(ENABLE_TESTING)
   enable_testing()
